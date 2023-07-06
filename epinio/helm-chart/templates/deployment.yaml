@@ -40,10 +40,10 @@ spec:
         command:
           - /bin/sh
           - -c
-          - "cd /github && git clone https://github.com/richard-cox/epinio-sample-app.git"
+          - "cd /git && git clone https://github.com/richard-cox/epinio-sample-app.git && chown -R 1000:1000 /git"
         volumeMounts:
         - name: data
-          mountPath: /github
+          mountPath: /git
 {{- if .Values.extraInitContainers }}
 {{ tpl .Values.extraInitContainers . | indent 6}}
 {{- end }}
@@ -80,7 +80,7 @@ spec:
         {{- end }}
           volumeMounts:
           - name: data
-            mountPath: /github
+            mountPath: /git
           {{- range .Values.extraConfigmapMounts }}
           - name: {{ .name }}
             mountPath: {{ .mountPath }}
